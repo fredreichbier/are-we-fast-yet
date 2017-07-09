@@ -164,7 +164,7 @@ class Harness usingPlatform: platform = (
     (newRun: 'Sieve' inner: 3000) runBenchmark.
     (newRun: 'Storage' inner: 1000) runBenchmark.
     (newRun: 'Towers' inner: 600) runBenchmark.
-    0
+    ^ 0
   )
   
   printUsage = (
