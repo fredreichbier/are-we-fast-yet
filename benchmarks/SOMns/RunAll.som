@@ -150,20 +150,20 @@ class Harness usingPlatform: platform = (
   public main: args = (
     | run |
 
-(*    (newRun: 'DeltaBlue' inner: 12000) runBenchmark. *)
-    (newRun: 'Richards' inner: 100) runBenchmark.
-    (newRun: 'Json' inner: 100) runBenchmark.
-    (newRun: 'CD' inner: 250) runBenchmark.
-    (newRun: 'Havlak' inner: 1500) runBenchmark.
-    (newRun: 'Bounce' inner: 1500) runBenchmark.
-    (newRun: 'List' inner: 1500) runBenchmark.
-    (newRun: 'Mandelbrot' inner: 500) runBenchmark.
-    (newRun: 'NBody' inner: 250000) runBenchmark.
-    (newRun: 'Permute' inner: 1000) runBenchmark.
-    (newRun: 'Queens' inner: 1000) runBenchmark.
-    (newRun: 'Sieve' inner: 3000) runBenchmark.
-    (newRun: 'Storage' inner: 1000) runBenchmark.
-    (newRun: 'Towers' inner: 600) runBenchmark.
+    (newRun: 'DeltaBlue' inner: 200) runBenchmark.
+    (newRun: 'Richards' inner: 1) runBenchmark.
+    (newRun: 'Json' inner: 2) runBenchmark.
+    (newRun: 'CD' inner: 10) runBenchmark.
+    (newRun: 'Havlak' inner: 1) runBenchmark.
+    (newRun: 'Bounce' inner: 50) runBenchmark.
+    (newRun: 'List' inner: 25) runBenchmark.
+    (newRun: 'Mandelbrot' inner: 50) runBenchmark.
+    (newRun: 'NBody' inner: 10000) runBenchmark.
+    (newRun: 'Permute' inner: 20) runBenchmark.
+    (newRun: 'Queens' inner: 25) runBenchmark.
+    (newRun: 'Sieve' inner: 100) runBenchmark.
+    (newRun: 'Storage' inner: 25) runBenchmark.
+    (newRun: 'Towers' inner: 10) runBenchmark.
     ^ 0
   )
   
