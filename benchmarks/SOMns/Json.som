@@ -64,7 +64,7 @@ class JsonSuite usingPlatform: platform andHarness: harness = (
       | result |
       self read.
       self skipWhiteSpace.
-      result := self readValue.
+      result:: self readValue.
       self skipWhiteSpace.
       self isEndOfText ifFalse: [ self error: 'Unexpected character'].
       ^ result
@@ -105,7 +105,7 @@ class JsonSuite usingPlatform: platform andHarness: harness = (
     private readArray = (
       | array |
       self read.
-      array := JsonArray new.
+      array:: JsonArray new.
     
       (* Array might be empty *)
       self skipWhiteSpace.
@@ -127,7 +127,7 @@ class JsonSuite usingPlatform: platform andHarness: harness = (
     private readObjectKeyValuePair: object = (
       | name |
       self skipWhiteSpace.
-      name := self readName.
+      name:: self readName.
       self skipWhiteSpace.
   
       (self readChar: ':') ifFalse: [ self expected: ':' ].
@@ -142,7 +142,7 @@ class JsonSuite usingPlatform: platform andHarness: harness = (
     private readObject = (
       | object |
       self read.
-      object := JsonObject new.
+      object:: JsonObject new.
       self skipWhiteSpace.
 
       (self readChar: '}') ifTrue: [
@@ -218,7 +218,7 @@ class JsonSuite usingPlatform: platform andHarness: harness = (
           self read.
         ]
       ].
-      string := self endCapture.
+      string:: self endCapture.
       self read.
       ^ string
     )
@@ -239,7 +239,7 @@ class JsonSuite usingPlatform: platform andHarness: harness = (
 
     private readEscape = (
       self read.    
-      captureBuffer := captureBuffer concatenate: self readEscapeChar.
+      captureBuffer:: captureBuffer concatenate: self readEscapeChar.
       self read
     )
 
@@ -247,7 +247,7 @@ class JsonSuite usingPlatform: platform andHarness: harness = (
       | firstDigit |
       self startCapture.
       self readChar: '-'.
-      firstDigit := current.
+      firstDigit:: current.
     
       self readDigit ifFalse: [ self expected: 'digit' ].
       firstDigit <> '0' ifTrue: [ [self readDigit] whileTrue: []].
@@ -300,38 +300,38 @@ class JsonSuite usingPlatform: platform andHarness: harness = (
 
     private read = (
       current = '\n' ifTrue: [
-        line := line + 1.
-        column := 0.
+        line:: line + 1.
+        column:: 0.
       ].
     
-      index := index + 1.
-      column := column + 1.
+      index:: index + 1.
+      column:: column + 1.
 
       input ifNil: [ self error:'input nil'].
       index <= input length
-        ifTrue:  [ current := input charAt: index ]
-        ifFalse: [ current := nil ]
+        ifTrue:  [ current:: input charAt: index ]
+        ifFalse: [ current:: nil ]
     )
 
     private startCapture = (
-      captureStart := index
+      captureStart:: index
     )
 
     private pauseCapture = (
-      captureBuffer := captureBuffer concatenate: (
+      captureBuffer:: captureBuffer concatenate: (
         input substringFrom: captureStart to: index - 1).
-      captureStart := -1
+      captureStart:: -1
     )
 
     private endCapture = (
       | captured |
       '' = captureBuffer
-        ifTrue:  [ captured := input substringFrom: captureStart to: index - 1 ]
+        ifTrue:  [ captured:: input substringFrom: captureStart to: index - 1 ]
         ifFalse: [
           self pauseCapture.
-          captured := captureBuffer.
-          captureBuffer := '' ].
-      captureStart := -1.
+          captured:: captureBuffer.
+          captureBuffer:: '' ].
+      captureStart:: -1.
     
       ^ captured
     )
@@ -379,7 +379,7 @@ class JsonSuite usingPlatform: platform andHarness: harness = (
   )(
     public at: name put: index = (
       | slot |
-      slot := self hashSlotFor: name.
+      slot:: self hashSlotFor: name.
     
       index < 255
         ifTrue:  [ hashTable at: slot put: index + 1 ]
@@ -388,7 +388,7 @@ class JsonSuite usingPlatform: platform andHarness: harness = (
 
     public at: name = (
       | slot |
-      slot := self hashSlotFor: name.
+      slot:: self hashSlotFor: name.
 
       (* subtract 1, 0 stands for empty *)
       ^ ((hashTable at: slot) & 255) - 1
@@ -496,7 +496,7 @@ class JsonSuite usingPlatform: platform andHarness: harness = (
     public at: name = (
       | idx |
       name ifNil: [ self error: 'name is null'  ].
-      idx := self indexOf: name.
+      idx:: self indexOf: name.
       idx = 0
         ifTrue:  [ ^ nil ]
         ifFalse: [ ^ values at: idx ]
@@ -515,7 +515,7 @@ class JsonSuite usingPlatform: platform andHarness: harness = (
 
     private indexOf: name = (
       | idx |
-      idx := table at: name.
+      idx:: table at: name.
       idx <> 0 && (name = (names at: idx)) ifTrue: [ ^ idx ].
       ^ self error: 'not implement'
     )

@@ -18,7 +18,7 @@ class NBodySuite usingPlatform: platform andHarness: harness = (
     
     public innerBenchmarkLoop: innerIterations = (
         | system |
-        system := NBodySystem new.
+        system:: NBodySystem new.
         
         1 to: innerIterations do: [:i |
             system advance: 0.01.
@@ -43,7 +43,7 @@ class NBodySuite usingPlatform: platform andHarness: harness = (
     public createBodies = (
       | px py pz bodies |
 
-      bodies := Array new: 5.
+      bodies:: Array new: 5.
       bodies at: 1 put: Body sun.
       bodies at: 2 put: Body jupiter.
       bodies at: 3 put: Body saturn.
@@ -52,12 +52,12 @@ class NBodySuite usingPlatform: platform andHarness: harness = (
   
       (* bodies do: [:b | b print. '' println ]. *)
 
-      px := py := pz := 0.0.
+      px:: py:: pz:: 0.0.
 
       bodies do: [:b |
-        px := px + (b vx * b mass).
-        py := py + (b vy * b mass).
-        pz := pz + (b vz * b mass).
+        px:: px + (b vx * b mass).
+        py:: py + (b vy * b mass).
+        pz:: pz + (b vz * b mass).
       ].
   
       (bodies at: 1) offsetMomentumX: px y: py z: pz.
@@ -69,18 +69,18 @@ class NBodySuite usingPlatform: platform andHarness: harness = (
     public advance: dt = (
       1 to: bodies size do: [:i |
         | iBody |
-        iBody := bodies at: i.
+        iBody:: bodies at: i.
 
         i + 1 to: bodies size do: [:j |
           | dx dy dz jBody dSquared distance mag |
-          jBody := bodies at: j.
-          dx := iBody x - jBody x.
-          dy := iBody y - jBody y.
-          dz := iBody z - jBody z.
+          jBody:: bodies at: j.
+          dx:: iBody x - jBody x.
+          dy:: iBody y - jBody y.
+          dz:: iBody z - jBody z.
 
-          dSquared := (dx * dx) + (dy * dy) + (dz * dz).
-          distance := dSquared sqrt.
-          mag      := dt // (dSquared * distance).
+          dSquared:: (dx * dx) + (dy * dy) + (dz * dz).
+          distance:: dSquared sqrt.
+          mag:: dt // (dSquared * distance).
 
           iBody vx: iBody vx - (dx * jBody mass * mag).
           iBody vy: iBody vy - (dy * jBody mass * mag).
@@ -101,27 +101,27 @@ class NBodySuite usingPlatform: platform andHarness: harness = (
     
     public energy = (
       | dx dy dz distance e |
-      e := 0.0.
+      e:: 0.0.
 
       1 to: bodies size do: [:i |
         | iBody |
-        iBody := bodies at: i.
+        iBody:: bodies at: i.
     
-        e := e + (0.5 * iBody mass *
+        e:: e + (0.5 * iBody mass *
              ((iBody vx * iBody vx) +
               (iBody vy * iBody vy) +
               (iBody vz * iBody vz))).
     
         i + 1 to: bodies size do: [:j |
           | jBody |
-          jBody := bodies at: j.
+          jBody:: bodies at: j.
     
-          dx := iBody x - jBody x.
-          dy := iBody y - jBody y.
-          dz := iBody z - jBody z.
+          dx:: iBody x - jBody x.
+          dy:: iBody y - jBody y.
+          dz:: iBody z - jBody z.
 
-          distance := ((dx*dx) + (dy*dy) + (dz*dz)) sqrt.
-          e := e - ((iBody mass * jBody mass) // distance).
+          distance:: ((dx*dx) + (dy*dy) + (dz*dz)) sqrt.
+          e:: e - ((iBody mass * jBody mass) // distance).
         ].
       ].
       ^ e
@@ -138,9 +138,9 @@ class NBodySuite usingPlatform: platform andHarness: harness = (
     public mass = mass * SolarMass.
   |)(    
     public offsetMomentumX: px y: py z: pz = (
-      vx := 0.0 - (px // SolarMass).
-      vy := 0.0 - (py // SolarMass).
-      vz := 0.0 - (pz // SolarMass).
+      vx:: 0.0 - (px // SolarMass).
+      vy:: 0.0 - (py // SolarMass).
+      vz:: 0.0 - (pz // SolarMass).
     )
     
     public print = (

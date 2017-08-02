@@ -30,8 +30,8 @@ class QueensSuite usingPlatform: platform andHarness: harness = (
   |)(
     public benchmark = (
       | result |
-      result := true.
-      1 to: 10 do: [ :i | result := result and: self queens ].
+      result:: true.
+      1 to: 10 do: [ :i | result:: result and: self queens ].
       ^ result
     )
 
@@ -40,10 +40,10 @@ class QueensSuite usingPlatform: platform andHarness: harness = (
     )
 
     private queens = (
-      freeRows  := Array new:  8 withAll: true.
-      freeMaxs  := Array new: 16 withAll: true.
-      freeMins  := Array new: 16 withAll: true.
-      queenRows := Array new:  8 withAll: -1.
+      freeRows:: Array new:  8 withAll: true.
+      freeMaxs:: Array new: 16 withAll: true.
+      freeMins:: Array new: 16 withAll: true.
+      queenRows:: Array new:  8 withAll: -1.
       ^ self placeQueen: 1
     )
 
