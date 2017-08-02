@@ -5,16 +5,14 @@ pushd `dirname $0` > /dev/null
 SCRIPT_PATH=`pwd`
 popd > /dev/null
 
-## Graal-Core Binary
-##  folder is different depending on host JDK version
-##  take the first, might pick up outdated version unfortunately
-GRAAL_CORE_CMD=`find $SCRIPT_PATH -perm /111 -type f -name java | grep "product/bin/" | head -n 1`
+export JVMCI_VERSION_CHECK=ignore
+GRAAL_CORE_CMD=$SCRIPT_PATH/graal-core/bin/java
 
 GRAAL_HOSTED_FLAGS="-server -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -d64 "
 GRAAL_JIT_FLAGS="-server -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -XX:+UseJVMCICompiler -d64 "
 
 ## GraalVM Binary
-export GRAAL_VM_CMD=$SCRIPT_PATH/graalvm/jre/bin/javao
+export GRAAL_VM_CMD=$SCRIPT_PATH/graalvm/bin/java
 export GRAAL_JS=$SCRIPT_PATH/graalvm/bin/node
 
 export RBX_314_CMD=$RUBINIUS_BIN
@@ -31,12 +29,6 @@ then
   export JAVA8_HOME=${jvm_info[2]}
 else
   WARN Java directories could not be guessed, please check config.inc
-fi
-
-if [ ! -d "$JAVA8_HOME" ]
-then
-  ERR "Java 8 was not found. Please check config.inc file"
-  exit 1
 fi
 
 export JRUBY_CMD=$SCRIPT_PATH/JRuby/bin/jruby
