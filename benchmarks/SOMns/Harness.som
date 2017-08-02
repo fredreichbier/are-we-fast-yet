@@ -44,7 +44,7 @@ class Harness usingPlatform: platform = (
     | seed ::= 74755. |
   ) (
     public next = (
-      seed := ((seed * 1309) + 13849) & 65535.
+      seed:: ((seed * 1309) + 13849) & 65535.
       ^ seed
     )
   )
@@ -56,22 +56,22 @@ class Harness usingPlatform: platform = (
     public next = (
       (* Original version, with complete set of conversions. *)
       
-         seed := ((seed       + 2127912214)       + (seed as32BitUnsignedValue  << 12) as32BitSignedValue) as32BitSignedValue.
-         seed := ((seed bitXor: 3345072700) bitXor: (seed as32BitUnsignedValue >>> 19)) as32BitSignedValue.
-         seed := ((seed       +  374761393)       + (seed as32BitUnsignedValue  <<  5) as32BitSignedValue) as32BitSignedValue.
-         seed := ((seed       + 3550635116) bitXor: (seed as32BitUnsignedValue  <<  9) as32BitSignedValue) as32BitSignedValue.
-         seed := ((seed       + 4251993797)       + (seed as32BitUnsignedValue  <<  3) as32BitSignedValue) as32BitSignedValue.
-         seed := ((seed bitXor: 3042594569) bitXor: (seed as32BitUnsignedValue >>> 16)) as32BitSignedValue.
+         seed:: ((seed       + 2127912214)       + (seed as32BitUnsignedValue  << 12) as32BitSignedValue) as32BitSignedValue.
+         seed:: ((seed bitXor: 3345072700) bitXor: (seed as32BitUnsignedValue >>> 19)) as32BitSignedValue.
+         seed:: ((seed       +  374761393)       + (seed as32BitUnsignedValue  <<  5) as32BitSignedValue) as32BitSignedValue.
+         seed:: ((seed       + 3550635116) bitXor: (seed as32BitUnsignedValue  <<  9) as32BitSignedValue) as32BitSignedValue.
+         seed:: ((seed       + 4251993797)       + (seed as32BitUnsignedValue  <<  3) as32BitSignedValue) as32BitSignedValue.
+         seed:: ((seed bitXor: 3042594569) bitXor: (seed as32BitUnsignedValue >>> 16)) as32BitSignedValue.
       
       (*   Optimized version, without semantically unnecessary conversions.
       
 
-      seed := ((seed       + 2127912214)       + (seed  << 12)) as32BitSignedValue. (* 0x7ed55d16 *)
-      seed := ((seed bitXor: 3345072700) bitXor: (seed >>> 19)).                    (* 0xc761c23c *)
-      seed := ((seed       +  374761393)       + (seed  <<  5)).                    (* 0x165667B1 *)
-      seed := ((seed       + 3550635116) bitXor: (seed  <<  9)).                    (* 0xd3a2646c *)
-      seed := ((seed       + 4251993797)       + (seed  <<  3)) as32BitSignedValue. (* 0xfd7046c5 *)
-      seed := ((seed bitXor: 3042594569) bitXor: (seed >>> 16)) as32BitSignedValue. (* 0xb55a4f09 *)
+      seed:: ((seed       + 2127912214)       + (seed  << 12)) as32BitSignedValue. (* 0x7ed55d16 *)
+      seed:: ((seed bitXor: 3345072700) bitXor: (seed >>> 19)).                    (* 0xc761c23c *)
+      seed:: ((seed       +  374761393)       + (seed  <<  5)).                    (* 0x165667B1 *)
+      seed:: ((seed       + 3550635116) bitXor: (seed  <<  9)).                    (* 0xd3a2646c *)
+      seed:: ((seed       + 4251993797)       + (seed  <<  3)) as32BitSignedValue. (* 0xfd7046c5 *)
+      seed:: ((seed bitXor: 3042594569) bitXor: (seed >>> 16)) as32BitSignedValue. (* 0xb55a4f09 *)
       *)
       ^ seed
     )
@@ -97,15 +97,15 @@ class Harness usingPlatform: platform = (
     
     private measure: bench = (
       | startTime endTime runTime |
-      startTime := system ticks.
+      startTime:: system ticks.
       (bench innerBenchmarkLoop: innerIterations) ifFalse: [
         self error: 'Benchmark failed with incorrect result'. ].
-      endTime := system ticks.
+      endTime:: system ticks.
   
-      runTime := endTime - startTime.
+      runTime:: endTime - startTime.
       self printResult: runTime.
   
-      total := total + runTime.
+      total:: total + runTime.
     )
     
     doRuns: bench = (
@@ -129,7 +129,7 @@ class Harness usingPlatform: platform = (
 
   processArguments: args = (
     | run |
-    run := Run new: (args at: 2).
+    run:: Run new: (args at: 2).
 
     args size > 2 ifTrue: [
       run numIterations: (args at: 3) asInteger.
@@ -143,7 +143,7 @@ class Harness usingPlatform: platform = (
     | run |
     args size < 2 ifTrue: [ self printUsage. ^ 1 ].
     
-    run := self processArguments: args.
+    run:: self processArguments: args.
 
     run runBenchmark.
     run printTotal.
@@ -161,8 +161,8 @@ class Harness usingPlatform: platform = (
   
   loadBenchmarkSuite: className = (
     | file cls |
-    file := className + '.som'.
-    cls := system loadModule: file nextTo: self.
+    file:: className + '.som'.
+    cls:: system loadModule: file nextTo: self.
     cls ifNil: [
         self error: 'Failed loading benchmark: ' + className ].
     ^ cls usingPlatform: platform andHarness: self.
